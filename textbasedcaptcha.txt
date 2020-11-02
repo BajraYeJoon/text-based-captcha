@@ -1,0 +1,53 @@
+from captcha.image import ImageCaptcha
+import numpy as np
+import matplotlib.pyplot as plt
+from PIL import Image
+import random
+import os
+
+#----------INTIALIZATION------------------
+number = ('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F',
+          'G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U',
+          'V','W','X','Y','Z')
+MAX_CAPTCHA=5
+WIDTH=200
+HEIGHT=100
+
+#-------------DESCRIPTION OF THE IMAGECAPTCHA--------------
+
+image=ImageCaptcha(width=WIDTH,height=HEIGHT,font_sizes=[30])
+
+#----------EMPTY LIST0------------------
+captcha_text=[]
+
+#------------FOR GENERATING RANDOM NUMBERS-------------
+for i in range(MAX_CAPTCHA):
+    c=random.choice(number)
+    captcha_text.append (c)
+
+captcha_text=''.join(captcha_text)
+a=captcha_text                                 #PRINTS THE VALUE OF A
+
+
+#--------------CONVERTING TEXT TO IMAGE------------
+
+captcha=image.generate(captcha_text)
+captcha_image=Image.open(captcha)
+captcha_image=np.array(captcha_image)
+
+print("text based captcha using python")
+
+#---------PLOTTING OF THE GRAPH------------------
+image.write(captcha_text, str(i)+'_'+captcha_text + '.png')
+plt.imshow(captcha_image)
+plt.show()
+
+#----------VERIFICATION-----------------
+a=captcha_text
+
+User_input=input("Enter the Above Captcha text=")
+if User_input==a:
+    print('Captcha Matched')
+else:
+    print('Incorrect Captcha typed')
+    
